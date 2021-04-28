@@ -1,0 +1,38 @@
+version: '3'
+
+services:
+  server:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: myapp-node-server
+    restart: on-failure
+    volumes:
+      - ./backend/:/usr/src/app
+    ports:
+      - "5000:5000"
+    depends_on:
+      - mongo
+    links:
+      - mongo
+    
+  mongo:
+    image: mongo
+    restart: always
+    volumes:
+      - /db/data-volume:/data/db
+    ports:
+      - "27017:27017"
+    logging:
+      driver: none
+
+  client:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    image: myapp-client
+    container_name: myapp-react-client
+    volumes:
+      - ./frontend/:/usr/app
+    ports:
+      - "3000:3000"

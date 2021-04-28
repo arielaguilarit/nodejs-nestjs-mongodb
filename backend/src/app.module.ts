@@ -7,7 +7,7 @@ import { CronModule } from './cron/cron.module';
 
 @Module({
   imports: [ 
-    MongooseModule.forRoot('mongodb://localhost/cron'), CronModule, 
+    MongooseModule.forRoot('mongodb://mongo/cron'), CronModule, 
     CronModule,
   ],
   controllers: [AppController],
